@@ -49,7 +49,7 @@ docker build -t PixelProof .
 
 3.Run the Docker container:
 ```bash
-docker run -p 8000:8000 -v "C:/Users/Asus/Desktop/weights:/app/weights" pixelproof
+docker run -p 8000:8000 -v "C:/Users/Asus/Desktop/weights:/app/weights" PixelProof
 ```
 4.Access API docs:
 ```bash
