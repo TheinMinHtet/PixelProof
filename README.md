@@ -44,12 +44,12 @@ cd PixelProof
 
 2.Build the Docker image:
 ```bash
-docker build -t deepfake_detection_web .
+docker build -t PixelProof .
 ```
 
 3.Run the Docker container:
 ```bash
-docker run -p 8000:8000 deepfake_detection_web
+docker run -p 8000:8000 PixelProof
 ```
 4.Access API docs:
 ```bash
