@@ -49,7 +49,7 @@ docker build -t PixelProof .
 
 3.Run the Docker container:
 ```bash
-docker run -p 8000:8000 PixelProof
+docker run -p 8000:8000 -v "C:/path_to_.pth" pixelproof
 ```
 4.Access API docs:
 ```bash
