@@ -7,7 +7,7 @@ PixelProof is a Deepfake Detection website where you can check if a video or pho
 
 ```bash
 git clone https://github.com/TheinMinHtet/PixelProof
-cd deepfake_detection_web
+cd PixelProof
 ```
 
 2 Create a virtual environment:
@@ -39,7 +39,7 @@ http://localhost:8000/docs
 1.Clone the repository:
 ```bash
 git clone https://github.com/TheinMinHtet/PixelProof
-cd deepfake_detection_web
+cd PixelProof
 ```
 
 2.Build the Docker image:
