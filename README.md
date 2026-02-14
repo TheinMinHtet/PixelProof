@@ -59,7 +59,7 @@ http://localhost:8000/docs
 The deepfake detection model weights (`best_fusion_srm_model.pth`) are too large for GitHub. You must download them separately from Hugging Face.
 
 ### Option 1: Manual Download (Recommended)
-1. Visit the [PixelProof Model on Hugging Face](https://huggingface.co/YourUsername/PixelProof).
+1. Visit the [PixelProof Model on Hugging Face](https://huggingface.co/spaces/Thein777/PixelProof/tree/main).
 2. Download the `best_fusion_srm_model.pth` file.
 3. Create a folder in the project root: `app/weights/`.
 4. Place the downloaded file inside that folder.
