@@ -65,5 +65,6 @@ The deepfake detection model weights (`best_fusion_srm_model.pth`) are too large
 
 ## How to call from frontend
 1.Do the steps that i provided and then check http://127.0.0.1:8000 it shows {Deepfake API is running}.
+
 2.then use http://127.0.0.1:8000/predict as a endpoint.
 
