@@ -70,3 +70,6 @@ The deepfake detection model weights (`best_fusion_srm_model.pth`) are too large
 
 ## Training Code 
 If you want to know how to train this model more details you can check in this (https://huggingface.co/Thein777/DeepFake_Images_Detection/tree/main) in this you can also see the weights of the model
+
+## Training Dataset
+If you want to check the training dataset you can check in this (https://huggingface.co/datasets/Thein777/real_fake_low_high_quality_images/tree/main)
