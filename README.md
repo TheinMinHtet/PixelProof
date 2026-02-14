@@ -44,12 +44,12 @@ cd deepfake_detection_web
 
 2.Build the Docker image:
 ```bash
-docker build -t deepfake_api .
+docker build -t deepfake_detection_web .
 ```
 
 3.Run the Docker container:
 ```bash
-docker run -p 8000:8000 deepfake_api
+docker run -p 8000:8000 deepfake_detection_web
 ```
 4.Access API docs:
 ```bash
