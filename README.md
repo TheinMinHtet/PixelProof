@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 4.Run the FastAPI server:
 ```bash
-python -m app/main.py
+python -m app.main
 ```
 
 5.Open the API docs in your browser:
