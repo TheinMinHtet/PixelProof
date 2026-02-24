@@ -3,6 +3,7 @@ from PIL import Image
 import io
 
 from app.model_utils import predict_image
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Deepfake Detection API")
 
@@ -25,3 +26,11 @@ async def predict(file: UploadFile = File(...)):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all (for development)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
