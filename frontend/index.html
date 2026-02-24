@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Deepfake Detection</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Deepfake Detection</h1>
+
+      <!-- MODE SELECT -->
+      <select id="modeSelect">
+        <option value="image">Image</option>
+        <option value="video">Video</option>
+      </select>
+
+      <br /><br />
+
+      <input type="file" id="fileInput" />
+      <button onclick="uploadFile()">Predict</button>
+
+      <div id="preview"></div>
+      <div id="result" class="result-box"></div>
+    </div>
+
+    <script>
+      async function uploadFile() {
+        const mode = document.getElementById("modeSelect").value;
+        const fileInput = document.getElementById("fileInput");
+        const resultDiv = document.getElementById("result");
+        const previewDiv = document.getElementById("preview");
+
+        if (!fileInput.files.length) {
+          alert("Please select a file.");
+          return;
+        }
+
+        const file = fileInput.files[0];
+
+        previewDiv.innerHTML = "";
+        resultDiv.innerHTML = "Processing...";
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          let endpoint = "";
+
+          if (mode === "image") {
+            endpoint = "http://127.0.0.1:8000/predict-image";
+            previewDiv.innerHTML = `<img src="${URL.createObjectURL(file)}" width="250">`;
+          } else {
+            endpoint = "http://127.0.0.1:8000/predict-video";
+            previewDiv.innerHTML = `<video width="300" controls>
+                    <source src="${URL.createObjectURL(file)}">
+                </video>`;
+          }
+
+          const response = await fetch(endpoint, {
+            method: "POST",
+            body: formData,
+          });
+
+          const data = await response.json();
+
+          resultDiv.innerHTML = `
+            <h3>Prediction: ${data.prediction}</h3>
+            <h4>Confidence: ${data.confidence}</h4>
+        `;
+        } catch (error) {
+          resultDiv.innerHTML = "Error connecting to backend.";
+          console.error(error);
+        }
+      }
+    </script>
+  </body>
+</html>
