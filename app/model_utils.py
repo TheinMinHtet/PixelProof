@@ -4,6 +4,9 @@ import torch.nn.functional as F
 from transformers import AutoImageProcessor, SiglipForImageClassification
 import torchvision.transforms as T
 import os
+import cv2
+import numpy as np
+from PIL import Image
 
 # =====================================================
 # 1. SETUP
@@ -12,7 +15,6 @@ import os
 DEVICE = torch.device("cpu")  # CPU for deployment
 SIGLIP_ID = "prithivMLmods/deepfake-detector-model-v1"
 EMB_DIM = 128
-
 
 # =====================================================
 # 2. ARCHITECTURE (MUST MATCH TRAINING EXACTLY)
@@ -90,7 +92,6 @@ class SigLIP_ArtifactNet(nn.Module):
         combined = torch.cat([sigl_emb, cnn_emb], dim=1)
         return self.fusion_classifier(combined)
 
-
 # =====================================================
 # 3. GLOBAL MODEL LOADING (LOAD ONCE)
 # =====================================================
@@ -120,24 +121,50 @@ if os.path.exists(weights_path):
     checkpoint = torch.load(weights_path, map_location=DEVICE)
     model.load_state_dict(checkpoint["model_state_dict"])
     model.eval()
-
-    # Disable gradients for safety
     for param in model.parameters():
         param.requires_grad = False
-
     print("✅ Model loaded successfully!")
 else:
-    raise FileNotFoundError(
-        f"CRITICAL: Weights file not found at {weights_path}"
-    )
-
+    raise FileNotFoundError(f"CRITICAL: Weights file not found at {weights_path}")
 
 # =====================================================
-# 4. INFERENCE FUNCTION
+# 4. FACE DETECTOR (LOAD ONCE)
+# =====================================================
+
+face_cascade = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+)
+
+# =====================================================
+# 5. INFERENCE FUNCTION
 # =====================================================
 
 @torch.no_grad()
 def predict_image(pil_image):
+    """
+    Predicts if an image is FAKE or REAL, only if a face is detected.
+    Returns ("NO_FACE_DETECTED", 0.0) if no face found.
+    """
+
+    # Convert PIL to OpenCV format
+    img_np = np.array(pil_image)
+    img_bgr = cv2.cvtColor(img_np, cv2.COLOR_RGB2BGR)
+    gray = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2GRAY)
+
+    # Detect faces
+    faces = face_cascade.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(50, 50)
+    )
+
+    if len(faces) == 0:
+        return "NO_FACE_DETECTED", 0.0
+
+    # ========================
+    # Continue normal prediction
+    # ========================
 
     sigl_in = processor(
         images=pil_image,
@@ -146,7 +173,6 @@ def predict_image(pil_image):
 
     cnn_in = transform(pil_image).unsqueeze(0).to(DEVICE)
 
-    # Better LQ check (use smallest dimension)
     is_lq = torch.tensor(
         [1.0 if min(pil_image.size) < 600 else 0.0]
     ).to(DEVICE)

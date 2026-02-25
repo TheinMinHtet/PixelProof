@@ -8,3 +8,4 @@ uvicorn
 accelerate
 safetensors
 opencv-python
+numpy>=1.24,<2.2

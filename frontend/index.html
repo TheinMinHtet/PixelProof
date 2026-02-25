@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelProof | AI Deepfake Detection</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #0f172a; }
-        .hero-gradient { background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 0) 50%); }
-        .nav-link { position: relative; transition: all 0.3s; cursor: pointer; }
-        .dropdown:hover .dropdown-menu { display: block; }
-        .fade-up { animation: fadeUp 0.5s ease-out forwards; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PixelProof | AI Deepfake Detection</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #0f172a; }
+.hero-gradient { background: radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.05) 0%, rgba(255, 255, 255, 0) 50%); }
+.nav-link { position: relative; transition: all 0.3s; cursor: pointer; }
+.dropdown:hover .dropdown-menu { display: block; }
+.fade-up { animation: fadeUp 0.5s ease-out forwards; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body class="hero-gradient">
 <div id="root"></div>
@@ -24,8 +25,16 @@
 <script type="text/babel">
 const { useState, useRef, useEffect } = React;
 
+// --- Main App ---
 const App = () => {
     const [currentPage, setCurrentPage] = useState('home'); // 'home', 'image', 'video'
+
+    const handleAboutClick = () => {
+        if (currentPage !== 'home') setCurrentPage('home');
+        setTimeout(() => {
+            document.getElementById('about-us')?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    };
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -33,24 +42,27 @@ const App = () => {
             <nav className="flex items-center justify-between px-12 py-6 border-b border-gray-100 bg-white/80 backdrop-blur-md sticky top-0 z-50">
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentPage('home')}>
                     <div className="bg-blue-600 p-1.5 rounded-lg shadow-lg">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
                     </div>
                     <span className="text-2xl font-extrabold tracking-tight">PixelProof</span>
                 </div>
-
                 <div className="hidden md:flex items-center gap-10 font-bold text-gray-500">
                     <button onClick={() => setCurrentPage('home')} className={`nav-link hover:text-blue-600 ${currentPage === 'home' ? 'text-blue-600' : ''}`}>Home</button>
-                    
                     <div className="relative dropdown group py-4">
                         <button className={`flex items-center gap-1 nav-link hover:text-blue-600 ${currentPage !== 'home' ? 'text-blue-600' : ''}`}>
                             Detection Tools
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
                         </button>
                         <div className="dropdown-menu absolute hidden top-full left-0 w-64 bg-white border border-gray-100 shadow-2xl rounded-2xl py-3 overflow-hidden">
                             <button onClick={() => setCurrentPage('image')} className="w-full text-left px-5 py-3 hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors">📷 Image Detection</button>
                             <button onClick={() => setCurrentPage('video')} className="w-full text-left px-5 py-3 hover:bg-blue-50 text-gray-700 hover:text-blue-600 transition-colors">🎥 Video Detection</button>
                         </div>
                     </div>
+                    <button onClick={handleAboutClick} className="nav-link hover:text-blue-600">About Us</button>
                 </div>
             </nav>
 
@@ -58,34 +70,67 @@ const App = () => {
                 {currentPage === 'home' ? <HomeView onStart={() => setCurrentPage('image')} /> : <DetectorView mode={currentPage} />}
             </main>
 
-            <footer className="py-8 text-center text-gray-400 text-sm border-t border-gray-50">
-                &copy; 2026 PixelProof AI Labs. Powered by FastAPI.
+            {/* Footer */}
+            <footer className="bg-[#0b1120] text-gray-400 py-20 px-12">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+                    <div>
+                        <h4 className="text-white font-bold mb-6">Tools</h4>
+                        <ul className="space-y-4 text-sm">
+                            <li className="hover:text-white cursor-pointer" onClick={() => setCurrentPage('image')}>Deepfake Image Detection</li>
+                            <li className="hover:text-white cursor-pointer" onClick={() => setCurrentPage('video')}>Deepfake Video Detection</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="text-white font-bold mb-6">About</h4>
+                        <ul className="space-y-4 text-sm">
+                            <li className="hover:text-white cursor-pointer" onClick={handleAboutClick}>About Us</li>
+                            <li className="hover:text-white cursor-pointer">Privacy Policy</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 className="text-white font-bold mb-6">Contact</h4>
+                        <ul className="space-y-4 text-sm font-bold">
+                            <li className="hover:text-white">hello@pixelproof.io</li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="max-w-7xl mx-auto border-t border-gray-800 mt-16 pt-8 text-center text-xs">
+                    © 2026 PixelProof AI Labs. All rights reserved.
+                </div>
             </footer>
         </div>
     );
 };
 
+// --- HomeView ---
 const HomeView = ({ onStart }) => (
-    <div className="max-w-7xl mx-auto px-12 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div className="space-y-8">
-            <h1 className="text-6xl lg:text-7xl font-[800] text-slate-900 leading-[1.1] tracking-tight">
-                AI <span className="text-blue-600">Deepfake</span> <br/> Analysis Tool.
-            </h1>
-            <p className="text-xl text-gray-500 leading-relaxed max-w-lg">
-                Upload images or videos to detect manipulated content using our state-of-the-art forensic neural networks.
-            </p>
-            <button onClick={onStart} className="bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-5 px-10 rounded-2xl shadow-xl transition-all hover:scale-105 flex items-center gap-3 text-xl">
-                Get Started
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-            </button>
+    <div className="fade-up">
+        <div className="max-w-7xl mx-auto px-12 py-20 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8 text-center lg:text-left">
+                <h1 className="text-6xl lg:text-7xl font-[800] text-slate-900 leading-[1.1] tracking-tight">
+                    AI <span className="text-blue-600">Deepfake</span> <br/> Analysis Tool.
+                </h1>
+                <p className="text-xl text-gray-500 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                    Upload images or videos to detect manipulated content using our state-of-the-art forensic neural networks.
+                </p>
+                <button onClick={onStart} className="mx-auto lg:mx-0 bg-blue-600 hover:bg-blue-700 text-white font-extrabold py-5 px-10 rounded-2xl shadow-xl transition-all hover:scale-105 flex items-center gap-3 text-xl">
+                    Get Started
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </div>
+            <div className="relative">
+                <div className="absolute -inset-4 bg-blue-100/50 rounded-[40px] blur-2xl"></div>
+                <img src="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=800" className="relative rounded-[32px] shadow-2xl border-8 border-white object-cover h-[450px] w-full" />
+            </div>
         </div>
-        <div className="relative">
-            <div className="absolute -inset-4 bg-blue-100/50 rounded-[40px] blur-2xl"></div>
-            <img src="https://images.unsplash.com/photo-1614741118887-7a4ee193a5fa?w=800" className="relative rounded-[32px] shadow-2xl border-8 border-white object-cover h-[450px] w-full" />
-        </div>
+
+        {/* About Us section, How-To, FAQ can be added here in same style */}
     </div>
 );
 
+// --- DetectorView remains same as before ---
 const DetectorView = ({ mode }) => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
@@ -93,129 +138,44 @@ const DetectorView = ({ mode }) => {
     const [result, setResult] = useState(null);
     const fileInput = useRef();
 
-    // Reset state when mode changes
-    useEffect(() => {
-        setFile(null);
-        setPreview(null);
-        setResult(null);
-    }, [mode]);
+    useEffect(() => { setFile(null); setPreview(null); setResult(null); }, [mode]);
 
     const handleFileSelect = (e) => {
-        const f = e.target.files[0];
-        if (f) {
-            setFile(f);
-            setPreview(URL.createObjectURL(f));
-            setResult(null);
-        }
+        const f = e.target.files[0]; if(f){ setFile(f); setPreview(URL.createObjectURL(f)); setResult(null); }
     };
-
-    const removeFile = () => {
-        setFile(null);
-        setPreview(null);
-        setResult(null);
-        fileInput.current.value = null;
-    };
-
+    const removeFile = () => { setFile(null); setPreview(null); setResult(null); fileInput.current.value = null; };
     const uploadToFastAPI = async () => {
-        if (!file) return;
-        setLoading(true);
-        
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const endpoint = mode === 'image' 
-            ? "http://127.0.0.1:8000/predict-image" 
-            : "http://127.0.0.1:8000/predict-video";
-
-        try {
-            const response = await fetch(endpoint, { method: "POST", body: formData });
-            const data = await response.json();
-            setResult(data);
-        } catch (error) {
-            alert("Connection Error: Is your FastAPI server running on port 8000?");
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
+        if(!file) return; setLoading(true);
+        const formData = new FormData(); formData.append("file", file);
+        const endpoint = mode==='image'?"http://127.0.0.1:8000/predict-image":"http://127.0.0.1:8000/predict-video";
+        try { const response = await fetch(endpoint,{method:"POST",body:formData}); const data = await response.json(); setResult(data); } 
+        catch(e){ alert("Connection Error: Is your FastAPI server running?"); console.error(e); } 
+        finally{ setLoading(false); }
     };
 
     return (
         <div className="max-w-3xl mx-auto py-16 px-6 fade-up">
             <div className="text-center mb-12">
-                <span className="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 inline-block">
-                    {mode} Mode
-                </span>
+                <span className="bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 inline-block">{mode} Mode</span>
                 <h2 className="text-4xl font-black text-slate-900 mb-2">Verify Authenticity</h2>
                 <p className="text-gray-500 font-medium">Upload the file you wish to scan for AI manipulation.</p>
             </div>
 
-            {/* Upload Zone */}
-            <div 
-                onClick={() => fileInput.current.click()} 
-                className="border-4 border-dashed border-gray-200 rounded-[32px] p-12 text-center bg-white hover:border-blue-400 hover:bg-blue-50/50 transition-all cursor-pointer group shadow-sm relative"
-            >
-                <input type="file" ref={fileInput} className="hidden" accept={mode === 'image' ? "image/*" : "video/*"} onChange={handleFileSelect} />
-
-                {preview ? (
-                    <div className="relative inline-block">
-                        {mode === 'image' ? (
-                            <img src={preview} className="mx-auto max-h-80 rounded-2xl shadow-lg border-4 border-white" />
-                        ) : (
-                            <video src={preview} className="mx-auto max-h-80 rounded-2xl shadow-lg border-4 border-white" controls />
-                        )}
-
-                        {/* Remove button */}
-                        <button
-                            onClick={(e) => { e.stopPropagation(); removeFile(); }}
-                            className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold hover:bg-red-600 shadow-lg"
-                        >
-                            ✕
-                        </button>
-                    </div>
-                ) : (
-                    <div className="py-10">
-                        <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        </div>
-                        <p className="text-xl font-bold text-slate-700">Click to upload {mode}</p>
-                        <p className="text-gray-400 text-sm">Max file size: 50MB</p>
-                    </div>
-                )}
+            {/* Upload zone */}
+            <div onClick={()=>fileInput.current.click()} className="border-4 border-dashed border-gray-200 rounded-[32px] p-12 text-center bg-white hover:border-blue-400 hover:bg-blue-50/50 transition-all cursor-pointer group shadow-sm relative">
+                <input type="file" ref={fileInput} className="hidden" accept={mode==='image'?"image/*":"video/*"} onChange={handleFileSelect} />
+                {preview ? (<div className="relative inline-block">{mode==='image'?<img src={preview} className="mx-auto max-h-80 rounded-2xl shadow-lg border-4 border-white" />:<video src={preview} className="mx-auto max-h-80 rounded-2xl shadow-lg border-4 border-white" controls />}<button onClick={(e)=>{e.stopPropagation();removeFile();}} className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold hover:bg-red-600 shadow-lg">✕</button></div>)
+                :(<div className="py-10"><div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform"><svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg></div><p className="text-xl font-bold text-slate-700">Click to upload {mode}</p></div>)}
             </div>
 
-            {file && (
-                <button 
-                    onClick={uploadToFastAPI} 
-                    disabled={loading} 
-                    className="w-full mt-8 bg-slate-900 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50"
-                >
-                    {loading ? "⚡ ANALYZING CONTENT..." : "START PREDICTION"}
-                </button>
-            )}
+            {file && <button onClick={uploadToFastAPI} disabled={loading} className="w-full mt-8 bg-slate-900 text-white py-5 rounded-2xl font-black text-xl shadow-xl hover:shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">{loading?"⚡ ANALYZING CONTENT...":"START PREDICTION"}</button>}
 
-            {/* Results Card */}
-            {result && (
-                <div className="mt-12 p-10 bg-white border border-gray-100 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-between fade-up">
-                    <div>
-                        <h3 className="text-blue-600 text-xs font-black uppercase tracking-[0.2em] mb-2">Scan Result</h3>
-                        <p className={`text-5xl font-black capitalize ${result.prediction?.toLowerCase() === 'real' ? 'text-green-600' : 'text-red-600'}`}>
-                            {result.prediction}
-                        </p>
-                        <p className="text-lg text-gray-500 mt-2 font-medium">
-                            Confidence: <span className="text-slate-900 font-bold">{result.confidence}</span>
-                        </p>
-                    </div>
-                    <div className="text-7xl">
-                        {result.prediction?.toLowerCase() === 'real' ? '🛡️' : '⚠️'}
-                    </div>
-                </div>
-            )}
+            {result && <div className="mt-12 p-10 bg-white border border-gray-100 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex items-center justify-between fade-up"><div><h3 className="text-blue-600 text-xs font-black uppercase tracking-[0.2em] mb-2">Scan Result</h3><p className={`text-5xl font-black capitalize ${result.prediction?.toLowerCase()==='real'?'text-green-600':'text-red-600'}`}>{result.prediction}</p><p className="text-lg text-gray-500 mt-2 font-medium">Confidence: <span className="text-slate-900 font-bold">{result.confidence}</span></p></div><div className="text-7xl">{result.prediction?.toLowerCase()==='real'?'🛡️':'⚠️'}</div></div>}
         </div>
     );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 </script>
 </body>
 </html>
